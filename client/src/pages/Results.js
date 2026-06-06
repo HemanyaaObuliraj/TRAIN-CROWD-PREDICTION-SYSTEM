@@ -20,7 +20,9 @@ function Results() {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const day = days[now.getDay()];
     try {
-      const res = await api.get('/api/...')
+      const res = await api.get('/api/trains/crowd', {
+        params: { hour, day }
+      });
       const levels = {};
       trains.forEach(train => { levels[train._id] = res.data.crowdLevel; });
       setCrowdLevels(levels);
@@ -44,16 +46,12 @@ function Results() {
       `}</style>
 
       <div style={s.page}>
-        {/* Top bar */}
         <div style={s.topbar}>
-          <button style={s.back} onClick={() => navigate('/home')}>
-            ‹ Back
-          </button>
+          <button style={s.back} onClick={() => navigate('/home')}>‹ Back</button>
           <span style={s.topbarTitle}>Train Results</span>
           <span style={s.topbarCount}>{trains?.length} found</span>
         </div>
 
-        {/* Route pill */}
         <div style={s.routePill}>
           <div style={s.routeCity}>
             <span style={s.cityCode}>{source?.slice(0,3).toUpperCase()}</span>
@@ -72,13 +70,11 @@ function Results() {
           </div>
         </div>
 
-        {/* Cards */}
         <div style={s.list}>
-          {trains?.map((train, idx) => {
+          {trains?.map((train) => {
             const crowd = getCrowd(crowdLevels[train._id]);
             return (
               <div key={train._id} className="card-hover" style={s.ticket}>
-                {/* Ticket top */}
                 <div style={s.ticketTop}>
                   <div>
                     <div style={s.trainName}>{train.trainName}</div>
@@ -89,14 +85,12 @@ function Results() {
                   </div>
                 </div>
 
-                {/* Divider with circles */}
                 <div style={s.dividerRow}>
                   <div style={s.dividerCircle} />
                   <div style={s.dividerLine} />
                   <div style={s.dividerCircle} />
                 </div>
 
-                {/* Times */}
                 <div style={s.timeRow}>
                   <div style={s.timeBlock}>
                     <div style={s.timeVal}>{train.departureTime}</div>
@@ -113,7 +107,6 @@ function Results() {
                   </div>
                 </div>
 
-                {/* Crowd bar */}
                 <div style={s.barSection}>
                   <div style={s.barLabel}>
                     <span style={s.barText}>Crowd Level</span>
@@ -124,7 +117,6 @@ function Results() {
                   </div>
                 </div>
 
-                {/* Days + Seats */}
                 <div style={s.bottomRow}>
                   <div style={s.daysWrap}>
                     {['M','T','W','T','F','S','S'].map((d, i) => {
@@ -193,7 +185,7 @@ const s = {
   daysWrap: { display: 'flex', gap: 4 },
   dayDot: { width: 22, height: 22, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 9, fontWeight: 700 },
   seats: { fontSize: 13 },
-  seatsNum: { fontWeight: 700, color: '#111', fontFamily: 'DM Mono', textDecoration: 'none' },
+  seatsNum: { fontWeight: 700, color: '#111', fontFamily: 'DM Mono' },
   seatsLabel: { color: '#9ca3af' }
 };
 
