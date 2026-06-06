@@ -8,7 +8,7 @@ const app = express();
 connectDB();
 
 app.use(cors({
-  origin: 'https://train-crowd-prediction-system.vercel.app',
+  origin: ['https://train-crowd-prediction-system.vercel.app', 'http://localhost:3000'],
   credentials: true
 }));
 app.use(express.json());
