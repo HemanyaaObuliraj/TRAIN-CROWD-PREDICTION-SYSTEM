@@ -19,7 +19,7 @@ function Home() {
 
   const fetchLiveTrains = async () => {
     try {
-      const res = await api.get('/api/...')
+      const res = await api.get('/api/trains/live');
       setLiveTrains(res.data);
     } catch (err) {
       console.log(err);
@@ -31,7 +31,9 @@ function Home() {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.get('/api/...')
+      const res = await api.get('/api/trains/search', {
+  params: { source, destination }
+});
       navigate('/results', { state: { trains: res.data, source, destination } });
     } catch (err) {
       setError('No trains found for this route!');

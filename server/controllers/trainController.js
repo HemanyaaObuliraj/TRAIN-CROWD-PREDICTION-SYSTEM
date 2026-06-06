@@ -68,7 +68,7 @@ exports.getLiveTrains = async (req, res) => {
         crowdLevel = 'Low';
       }
 
-      return { ...train._doc, crowdLevel };
+      return { ...train.toObject(), crowdLevel };
     });
 
     res.status(200).json(liveTrainsWithCrowd);
