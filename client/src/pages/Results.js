@@ -8,10 +8,11 @@ function Results() {
   const { trains, source, destination } = location.state || {};
   const [crowdLevels, setCrowdLevels] = useState({});
 
-  useEffect(() => {
+ useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) navigate('/');
     fetchCrowdLevels();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchCrowdLevels = async () => {
